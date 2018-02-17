@@ -9,7 +9,7 @@ class SiteController{
 
         require_once(ROOT.'/views/site/index.php');
 
-        echo "SiteController actionIndex";
+
 
         return true;
 

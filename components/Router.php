@@ -37,7 +37,7 @@ class Router
 
                 // Определить, какой контроллер и action обрабатывают запрос
                 $segments = explode('/', $path);        // получаем массив, в котором первый элемент - контроллер
-                                                                // второй - action
+                                                                 // второй - action
                 $controllerName = array_shift($segments).'Controller';
                 $controllerName = ucfirst($controllerName);
 
@@ -46,13 +46,17 @@ class Router
                 // Подключить файл класса-контроллера
                 $controllerFile = ROOT.'/controllers/'.$controllerName.'.php';
 
+                $parameters = $segments;
+
                 if (file_exists($controllerFile)){
                     include_once ($controllerFile);
                 }
 
                 // Создать объект, вызвать метод (action)
                 $controllerObject = new $controllerName;
-                $result = $controllerObject->$actionName();
+                $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
+
+
                 if ($result != null){
                     break;
                 }
