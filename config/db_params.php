@@ -5,7 +5,7 @@
 
 return array(
     'host' => 'localhost',
-    'dbname' => 'eshopper',
+    'dbname' => 'phpshop',
     'user' => 'root',
     'password' => '',
 );
