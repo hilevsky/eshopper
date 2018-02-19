@@ -35,7 +35,9 @@
                                         <div class="productinfo text-center">
                                             <img src="<?php echo $product['image'];?>" alt="" />
                                             <h2><?php echo $product['price']?> $</h2>
-                                            <a href="/product/<?php echo $product['id']?>"><p><?php echo $product['name']?></p></a>
+                                            <a href="/product/<?php echo $product['id']?>">
+                                                <p>Id:<?php echo $product['id']?><?php echo $product['name']?></p>
+                                            </a>
                                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
                                         </div>
                                         <?php if($product['is_new']):?>
@@ -45,6 +47,8 @@
                                 </div>
                             </div>
                         <?php endforeach;?>
+                        <!-- Постраничная навигация -->
+                        <?php echo $pagination->get();?>
 
 
                     </div><!--features_items-->

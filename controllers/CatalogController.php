@@ -9,6 +9,7 @@
 
 include_once ROOT.'/models/Category.php';
 include_once ROOT.'/models/Product.php';
+include_once ROOT.'/components/Pagination.php';
 
 class CatalogController
 {
@@ -34,7 +35,8 @@ class CatalogController
      * @param $categoryId   id категории
      * @return bool
      */
-    public function actionCategory($categoryId){
+    public function actionCategory($categoryId, $page = 1){
+
 
         // Список категорий для левого меню
         $categories =[];
@@ -42,7 +44,13 @@ class CatalogController
 
         // Списко товаров в категории
         $categoryProduct = [];
-        $categoryProduct = Product::getProductsListByCategory($categoryId);
+        $categoryProduct = Product::getProductsListByCategory($categoryId, $page);
+
+        // Кол-во товаров в категории для Pagination
+        $total = Product::getTotalProductsInCategory($categoryId);
+
+        // Создаем объекм Pagination - постраничная навигация
+        $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
 
         // Подключаем вид
         require_once (ROOT.'/views/catalog/category.php');
