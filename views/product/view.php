@@ -40,13 +40,13 @@
                                 <span>
                                             <span><?php echo $product['price'];?> $</span>
                                             <label>Количество:</label>
-                                            <input type="text" value="3" />
+                                            <input type="text" value="1" />
                                             <button type="button" class="btn btn-fefault cart">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 В корзину
                                             </button>
                                         </span>
-                                <p><b>Наличие:</b><?php if($product['availability'] == 1) echo 'В наличии'; else  echo 'Под заказ';?> </p>
+                                <p><b>Наличие:</b> <?php if($product['availability'] == 1) echo 'В наличии'; else  echo 'Под заказ';?> </p>
 
                                 <p><b>Производитель:</b> <?php echo $product['brand'];?></p>
                             </div><!--/product-information-->
