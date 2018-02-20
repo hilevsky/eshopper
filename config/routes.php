@@ -14,7 +14,10 @@ return array(
 
     'category/([0-9]+)' => 'catalog/category/$1',   //actionCategory в CatalogController
 
-    'user/register' => 'user/register',
+    'user/register' => 'user/register', // actionRegister в UserController
+    'user/login' => 'user/login',
+
+    'cabinet' =>'cabinet/index',    // indexAction в CabinetController
 
     '' => 'site/index',     //actionIndex в SiteController
 

@@ -5,6 +5,10 @@
 
 class UserController
 {
+    /**
+     * Регистрация нового пользователя
+     * @return bool
+     */
     public function actionRegister(){
 
         $name = '';
@@ -20,19 +24,19 @@ class UserController
             $errors =[];
 
             if(!User::checkName($name)){
-                $errors['name'] = 'Имя не должно быть короче 2-х символов';
+                $errors[] = 'Имя не должно быть короче 2-х символов';
             }
 
             if(!User::checkEmail($email)){
-                $errors['email'] = 'Неправильный E-mail';
+                $errors[] = 'Неправильный E-mail';
             }
 
             if(!User::checkPassword($password)){
-                $errors['password'] = 'Пароль должен быть не короче 6-и символов';
+                $errors[] = 'Пароль должен быть не короче 6-и символов';
             }
 
             if(User::checkEmailExists($email)){
-                $errors['emailExists'] = 'Такой E-mail уже существует';
+                $errors[] = 'Такой E-mail уже существует';
             }
 
             if($errors == false){
@@ -42,6 +46,46 @@ class UserController
         }
 
         require_once (ROOT.'/views/user/register.php');
+
+        return true;
+    }
+
+    /**
+     * Авторизация пользователя
+     */
+    public function actionLogin(){
+
+        $email = '';
+        $password = '';
+
+        if(isset($_POST['submit'])){
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            $errors = false;
+
+            // Валидация данных, полученных из формы авторизации
+            if(!User::checkEmail($email)){
+                $errors[] = 'Неправильный E-mail';
+            }
+            if(!User::checkPassword($password)){
+                $errors[] = 'Пароль не должен быть короче 6-и символов';
+            }
+
+            // Проверяем, существует ли пользователь в БД
+            $userId = User::checkUserData($email, $password);
+
+            if(!$userId){
+                // если пользователя нет - выводим ошибку
+                $errors[] = 'Неправильные данные пользователя';
+            } else {
+                // если пользователь есть - устанавливам сессию
+                User::auth($userId);
+                // и перенаправляем в закрытую часть сайта - в кабинет пользователя
+                header("Location: /cabinet/");
+            }
+        }
+        require_once (ROOT.'/views/user/login.php');
 
         return true;
     }
