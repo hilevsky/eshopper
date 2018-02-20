@@ -3,8 +3,7 @@
  * Created 16.02.2018 18:40 by E. Hilevsky
  */
 
-    include_once ROOT.'/models/Category.php';
-    include_once ROOT.'/models/Product.php';
+
 
 class SiteController{
 

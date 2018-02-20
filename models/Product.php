@@ -114,7 +114,9 @@ class Product
     }
 
     /**
-     *
+     *  Возвращает кол-во товаров в категории с заданным Id (пагинация)
+     * $param int $categoryId   Id категории
+     * @return int  кол-во товаров
      */
     public static function getTotalProductsInCategory($categoryId){
 
@@ -128,4 +130,22 @@ class Product
         return $row['count'];
 
     }
+
+    /**
+     * Возвращает кол-во всех товаров в БД (пагинация)
+     * @return mixed
+     */
+    public static function getTotalProducts(){
+
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT count(id) AS count FROM product
+                                        WHERE status=1');
+        $result -> setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+
+        return $row['count'];
+
+    }
+
 }

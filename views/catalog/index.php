@@ -26,7 +26,7 @@
 
             <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
-                    <h2 class="title text-center">Последние товары</h2>
+                    <h2 class="title text-center">Каталог</h2>
 
                     <?php foreach($latestProduct as $product): ?>
                     <div class="col-sm-4">
@@ -48,7 +48,8 @@
 
 
                 </div><!--features_items-->
-
+                <!-- Постраничная навигация -->
+                <?php echo $pagination->get();?>
 
 
             </div>

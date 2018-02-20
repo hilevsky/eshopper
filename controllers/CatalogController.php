@@ -7,14 +7,11 @@
  * Контроллер для каталога товаров
  */
 
-include_once ROOT.'/models/Category.php';
-include_once ROOT.'/models/Product.php';
-include_once ROOT.'/components/Pagination.php';
 
 class CatalogController
 {
 
-    public function actionIndex(){
+    public function actionIndex($page = 1){
 
         // Список категорий для левого меню
         $categories =[];
@@ -23,6 +20,12 @@ class CatalogController
         // Список последних товаров
         $latestProduct = [];
         $latestProduct = Product::getLatestProducts(12);
+
+        // Кол-во товаров в базе данных для Pagination
+        $total = Product::getTotalProducts();
+
+        // Создаем объекм Pagination - постраничная навигация
+        $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
 
         // Подключаем вид
         require_once(ROOT.'/views/catalog/index.php');
@@ -42,7 +45,7 @@ class CatalogController
         $categories =[];
         $categories = Category::getCategoriesList();
 
-        // Списко товаров в категории
+        // Список товаров в категории
         $categoryProduct = [];
         $categoryProduct = Product::getProductsListByCategory($categoryId, $page);
 

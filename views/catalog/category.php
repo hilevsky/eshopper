@@ -26,7 +26,10 @@
 
                 <div class="col-sm-9 padding-right">
                     <div class="features_items"><!--features_items-->
-                        <h2 class="title text-center">Последние товары</h2>
+                        <h2 class="title text-center">
+                                <?php foreach ($categories as $categoryItem){
+                                        if($categoryId == $categoryItem['id']) echo $categoryItem['name'];} ?>
+                            </h2>
 
                         <?php foreach($categoryProduct as $product): ?>
                             <div class="col-sm-4">
@@ -36,7 +39,7 @@
                                             <img src="<?php echo $product['image'];?>" alt="" />
                                             <h2><?php echo $product['price']?> $</h2>
                                             <a href="/product/<?php echo $product['id']?>">
-                                                <p>Id:<?php echo $product['id']?><?php echo $product['name']?></p>
+                                                <?php echo $product['name']?></p>
                                             </a>
                                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
                                         </div>
@@ -47,12 +50,12 @@
                                 </div>
                             </div>
                         <?php endforeach;?>
-                        <!-- Постраничная навигация -->
-                        <?php echo $pagination->get();?>
+
 
 
                     </div><!--features_items-->
-
+                    <!-- Постраничная навигация -->
+                    <?php echo $pagination->get();?>
 
 
                 </div>
