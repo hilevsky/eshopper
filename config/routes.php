@@ -21,6 +21,8 @@ return array(
     'cabinet/edit' => 'cabinet/edit',
     'cabinet' =>'cabinet/index',    // indexAction в CabinetController
 
+    'contacts' => 'site/contact',
+
     '' => 'site/index',     //actionIndex в SiteController
 
 );
