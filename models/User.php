@@ -159,6 +159,27 @@ class User
         }
     }
 
+    /**
+     * Редактирование данных пользователя в БД
+     * @param $id
+     * @param $name
+     * @param $password
+     */
+    public static function edit($id, $name, $password){
+
+        $password = md5($password);
+
+        $db = Db::getConnection();
+
+        $sql = 'UPDATE user SET name=:name, password=:password WHERE id=:id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        return $result->execute();
+    }
+
 
 
 
