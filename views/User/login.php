@@ -21,7 +21,7 @@
                             <form action="#" method="post">
                                 <input type="e-mail" name="email" placeholder="E-mail" value="<?=$email?>">
                                 <input type="password" name="password" placeholder="Пароль" value="<?=$password?>">
-                                <input type="submit" name="submit" class="btn btn-default" value="Регистрация">
+                                <input type="submit" name="submit" class="btn btn-default" value="Войти">
                             </form>
 
 

@@ -6,7 +6,10 @@
 class CabinetController
 {
     public function actionIndex(){
-
+        // Получаем идентификатор пользователя из сессии
+        $userId = User::checkLogged();
+        // Получаем информацию о пользователе
+        $user = User::getUserById(($userId));
 
         require_once (ROOT.'/views/cabinet/index.php');
 

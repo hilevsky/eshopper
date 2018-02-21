@@ -123,6 +123,42 @@ class User
         $_SESSION['user'] = $userId;
     }
 
+    public static function checkLogged(){
+
+        // Если сессия существует, получаем Id пользователя
+        if(isset($_SESSION['user'])){
+            return $_SESSION['user'];
+        }
+        //Если нет - перенаправляем на страницу авторизации
+        header ("Location: /user/login");
+    }
+
+    public static function isGuest(){
+
+        // Если сессия существует, значит неГость
+        if(isset($_SESSION['user'])){
+            return false;
+        }
+        //Если нет - Гость
+        return true;
+    }
+
+    public static function getUserById($id){
+
+        if($id){
+            $db = Db::getConnection();
+            $sql = 'SELECT * FROM user WHERE id = :id';
+
+            $result = $db->prepare($sql);
+            $result->bindParam(':id', $id, PDO::PARAM_INT);
+            //получаем данные в виде массива
+            $result->setFetchMode(PDO::FETCH_ASSOC);
+            $result->execute();
+
+            return $result->fetch();
+        }
+    }
+
 
 
 

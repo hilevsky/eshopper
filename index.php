@@ -14,6 +14,8 @@
     define('ROOT', dirname(__FILE__));
     require_once (ROOT.'/components/Autoload.php');
 
+    session_start();
+
     spl_autoload_register('autoload');
 
 // 3. Подключение БД

@@ -16,6 +16,7 @@ return array(
 
     'user/register' => 'user/register', // actionRegister в UserController
     'user/login' => 'user/login',
+    'user/logout' => 'user/logout',
 
     'cabinet' =>'cabinet/index',    // indexAction в CabinetController
 
