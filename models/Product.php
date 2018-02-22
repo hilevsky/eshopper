@@ -224,6 +224,20 @@ class Product
         return $productsList;
     }
 
+    /** Удаляем товар с указанным id
+     * @param integer $id товара
+     * @return bool
+     */
+    public static function deleteProductById($id){
+        $db = Db::getConnection();
+
+        $sql = 'DELETE FROM products WHERE id=:id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        return $result->execute();
+    }
+
 
     /**
      * Возвращает путь к изображению

@@ -25,4 +25,23 @@ class AdminProductController extends AdminBase
         return true;
     }
 
+
+    /**
+     * Action для страницы "Удалить товар"
+     */
+    public function actionDelete($id){
+        // Проверка доступа
+        self::checkAdmin();
+
+        // Обработка формы
+        if(isset($_POST['submit'])){
+            // Если форма отправлена, удаляем товар
+            Product::deleteProductById($id);
+            // Перенаправление на страницу управления товарами
+            header("Location: /admin/product");
+        }
+        require_once (ROOT.'/views/admin_product/delete.php');
+        return true;
+    }
+
 }
