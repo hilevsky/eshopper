@@ -172,4 +172,57 @@ class Product
         return $products;
     }
 
+    /**
+     * Возвращает массив рекомендованных товаров (для слайдера)
+     * @return array
+     */
+    public static function getRecommendedProducts(){
+
+        $db = Db::getConnection();
+
+        $sql = 'SELECT id, name, price, is_new FROM product
+                WHERE status=1 AND is_recommended=1 ORDER BY id DESC';
+
+        $result = $db->query($sql);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        $i=0;
+        $productList = [];
+        while($row = $result->fetch()){
+            $productList[$i]['id'] = $row['id'];
+            $productList[$i]['name'] = $row['name'];
+            $productList[$i]['price'] = $row['price'];
+            $productList[$i]['is_new'] = $row['is_new'];
+            $i++;
+        }
+        return $productList;
+
+    }
+
+    /**
+     * Возвращает путь к изображению
+     * @param integer $id
+     * @return string <p>Путь к изображению</p>
+     */
+    public static function getImage($id)
+    {
+        // Название изображения-пустышки
+        $noImage = 'no-image.jpg';
+
+        // Путь к папке с товарами
+        $path = '/upload/images/products/';
+
+        // Путь к изображению товара
+        $pathToProductImage = $path . $id . '.jpg';
+
+        if (file_exists($_SERVER['DOCUMENT_ROOT'].$pathToProductImage)) {
+            // Если изображение для товара существует
+            // Возвращаем путь изображения товара
+            return $pathToProductImage;
+        }
+
+        // Возвращаем путь изображения-пустышки
+        return $path . $noImage;
+    }
+
 }

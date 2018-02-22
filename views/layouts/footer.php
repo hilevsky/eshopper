@@ -10,6 +10,13 @@
     </div>
 </footer><!--/Footer-->
 
+<script src="/template/js/jquery.js"></script>
+<!-- Slider -->
+<script src="/template/js/jquery.cycle2.min.js"></script>
+<script src="/template/js/jquery.cycle2.carousel.min.js"></script>
+<!-- Slider -->
+
+
 <!--
 <script src="/template/js/jquery.js"></script>
 <script>

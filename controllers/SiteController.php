@@ -15,6 +15,9 @@ class SiteController{
         $latestProduct = [];
         $latestProduct = Product::getLatestProducts(6);
 
+        // Список товаров для слайдера
+        $sliderProducts = Product::getRecommendedProducts();
+
         require_once(ROOT.'/views/site/index.php');
 
 
