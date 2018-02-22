@@ -10,9 +10,18 @@ class CartController
         // Добавляем товар в корзину
         Cart::addProduct($id);
 
-        // Возвращаем пользоваетля на исходную страницу
+        // Возвращаем пользователя на исходную страницу
         $referrer = $_SERVER['HTTP_REFERER'];
         header("Location: $referrer");
+    }
+
+    public function actionDelete($id){
+
+        // Добавляем товар в корзину
+        Cart::deleteProduct($id);
+
+        // Возвращаем пользователя в корзину
+        header("Location: /cart");
     }
 
     public function actionIndex(){

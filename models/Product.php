@@ -196,8 +196,34 @@ class Product
             $i++;
         }
         return $productList;
-
     }
+
+    /**
+     * Возвращает список всех товаров в БД
+     * @return array массив с товарами
+     */
+    public static function getProductsList(){
+
+        $productsList = [];
+
+        $db = Db::getConnection();
+
+        $sql = "SELECT id, name, price, code FROM product ORDER BY id ASC";
+
+        $result = $db->query($sql);
+        /*$result->setFetchMode(PDO::FETCH_ASSOC);*/
+
+        $i=0;
+        while($row = $result->fetch()){
+            $productsList[$i]['id'] = $row['id'];
+            $productsList[$i]['code'] = $row['code'];
+            $productsList[$i]['name'] = $row['name'];
+            $productsList[$i]['price'] = $row['price'];
+            $i++;
+        }
+        return $productsList;
+    }
+
 
     /**
      * Возвращает путь к изображению

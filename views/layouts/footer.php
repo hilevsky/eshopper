@@ -1,3 +1,6 @@
+<div class="page-buffer"></div>
+</div>
+
 
 <footer id="footer"><!--Footer-->
     <div class="footer-bottom">
