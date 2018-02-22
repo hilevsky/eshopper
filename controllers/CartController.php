@@ -38,4 +38,94 @@ class CartController
         return true;
     }
 
+    public function actionCheckout(){
+        // список категорий для левого меню
+        $categories =[];
+        $categories = Category::getCategoriesList();
+
+        // Статус успешного оформления заказа
+        $result = false;
+
+        // Проверяем, отправлена ли форма
+        if(isset($_POST['submit'])){
+
+            $userName = $_POST['userName'];
+            $userPhone = $_POST['userPhone'];
+            $userComment = $_POST['userComment'];
+
+            // Валидация полей
+            $errors = false;
+            if(!User::checkName($userName))
+                $errors[] = 'Неправильное имя';
+/*            if(!User::checkPhone($userPhone))
+                $errors[] = 'Неправильный телефон';
+*/
+            // Форма заполнена правильно
+            if(!$errors){
+                // Собираем информацию о заказе
+                $productsInCart = Cart::getProducts();
+                if(User::isGuest()){
+                    $userId = false;
+                } else {
+                    $userId = User::checkLogged();
+                }
+
+                // Сохраняем заказ в БД
+                $result = Order::save($userName, $userPhone, $userComment, $userId, $productsInCart);
+
+                if($result){
+                    // Оповещаем администратора о новом заказе
+                    $adminEmail = 'e_gilevski@yahoo.com';
+                    $message = 'У нас новый заказ!';
+                    $subject = 'Новый заказ';
+                    mail($adminEmail, $subject, $message);
+
+                    //Очищаем корзину
+                    Cart::clear();
+                }
+            } else {
+                // Форма заполнена неправильно
+                $productsInCart = Cart::getProducts();
+                $productsIds = array_keys($productsInCart);
+                $products = Product::getProductsByIds($productsIds);
+                $totalPrice = Cart::getTotalPrice($products);
+                $totalQuantity = Cart::countItems();
+            }
+        } else {
+            // Форма не отправлена
+
+            // Получаем данные из корзины
+            $productsInCart = Cart::getProducts();
+
+            //В корзине есть товары?
+            if(!$productsInCart){
+                // Нет товаров - отправляем на главную искать товары
+                header("Location: /");
+            } else {
+                // В корзине есть товары - да
+                // Собираем общую стоимость, кол-во товаров
+                $productsIds = array_keys($productsInCart);
+                $products = Product::getProductsByIds($productsIds);
+                $totalPrice = Cart::getTotalPrice($products);
+                $totalQuantity = Cart::countItems();
+
+                $userName = false;
+                $userPhone = false;
+                $userComment = false;
+
+                // Пользователь авторизован?
+                if(!User::isGuest()){
+                    // Да - получаем инфу о нем и подставляем в форму
+                    $userId = User::checkLogged();
+                    $user = User::getUserById($userId);
+                    $userName = $user['name'];
+                } else {
+                    // Нет - значения для формы пустые
+                }
+            }
+        }
+        require_once (ROOT.'/views/cart/checkout.php');
+        return true;
+    }
+
 }

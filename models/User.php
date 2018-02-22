@@ -55,12 +55,24 @@ class User
     }
 
     /**
-     * Проверка E-mail на соответствие
+ * Проверка E-mail на соответствие
+ * @param string $email имя
+ * @return bool
+ */
+    public static function checkEmail($email){
+        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Проверка номера телефона
      * @param string $email имя
      * @return bool
      */
-    public static function checkEmail($email){
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+    public static function checkPhone($userPhone){
+        if(strlen($userPhone) >= 7){
             return true;
         }
         return false;
