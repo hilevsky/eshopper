@@ -23,4 +23,34 @@ class AdminCategoryController extends AdminBase
         return true;
     }
 
+    public function actionCreate(){
+        self::checkAdmin();
+
+        // Обработка формы
+        if(isset($_POST['submit'])){
+            // Если форма отправлена, получаем из нее данные
+            $name = $_POST['name'];
+            $sortOrder = $_POST['sort_order'];
+            $status = $_POST['status'];
+
+            // Массив для ошибок
+            $errors = [];
+
+            // Валидация полей формы (имя)
+            if(!isset($name) || empty($name)){
+                $errors[] = 'Заполните поля';
+            }
+
+            if(!$errors){
+                // Если ошибок нет, создаем новую категорию
+                Category::createCategory($name, $sortOrder, $status);
+
+                // Перенаправляем на страницу управления категориями
+                header("Location: /admin/category");
+            }
+        }
+        require_once (ROOT.'/views/admin_category/create.php');
+        return true;
+    }
+
 }

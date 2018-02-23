@@ -11,7 +11,7 @@
                     </ol>
                 </div>
 
-                <a href="/admin/сфеупщкн/create" class="btn btn-default back"><i class="fa fa-plus"></i>Добавить категорию</a>
+                <a href="/admin/category/create" class="btn btn-default back"><i class="fa fa-plus"></i>Добавить категорию</a>
 
                 <h4>Список товаров</h4>
 
