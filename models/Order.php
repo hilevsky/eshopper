@@ -35,4 +35,24 @@ class Order
 
         return $result->execute();
     }
+
+    public static function getOrderList(){
+        $db = Db::getConnection();
+
+        // Получение и возврат результатов
+        $result = $db->query('SELECT id, user_name, user_phone, date, status FROM product_order
+                                        ORDER BY id DESC');
+
+        $orderList=[];
+        $i = 0;
+        while($row = $result->fetch()){
+            $orderList[$i]['id'] = $row['id'];
+            $orderList[$i]['user_name'] = $row['user_name'];
+            $orderList[$i]['user_phone'] = $row['user_phone'];
+            $orderList[$i]['date'] = $row['date'];
+            $orderList[$i]['status'] = $row['status'];
+            $i++;
+        }
+        return $orderList;
+    }
 }
