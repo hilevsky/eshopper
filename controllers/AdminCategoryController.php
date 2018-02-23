@@ -87,4 +87,22 @@ class AdminCategoryController extends AdminBase
         return true;
     }
 
+    /**
+     * Action для страницы "Удалить категорию"
+     */
+    public function actionDelete($id){
+        // Проверка доступа
+        self::checkAdmin();
+
+        // Обработка формы
+        if(isset($_POST['submit'])){
+            // Если форма отправлена, удаляем товар
+            Category::deleteCategoryById($id);
+            // Перенаправление на страницу управления товарами
+            header("Location: /admin/category");
+        }
+        require_once (ROOT.'/views/admin_category/delete.php');
+        return true;
+    }
+
 }
