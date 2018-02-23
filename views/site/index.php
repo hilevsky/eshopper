@@ -33,7 +33,7 @@
                         <div class="product-image-wrapper">
                             <div class="single-products">
                                 <div class="productinfo text-center">
-                                    <img src="<?php echo $product['image'];?>" alt="" />
+                                    <img src="<?=Product::getImage($product['id'])?>" alt="" />
                                     <h2><?php echo $product['price']?> $</h2>
                                     <a href="/product/<?php echo $product['id']?>"><p><?php echo $product['name']?></p></a>
                                     <a href="/cart/add/<?=$product['id'];?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"> </i>В корзину</a>
@@ -48,6 +48,7 @@
 
 
                 </div><!--features_items-->
+
 
                 <div class="recommended_items"><!--recommended_items-->
                     <h2 class="title text-center">Рекомендуемые товары</h2>
