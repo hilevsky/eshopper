@@ -231,7 +231,7 @@ class Product
     public static function deleteProductById($id){
         $db = Db::getConnection();
 
-        $sql = 'DELETE FROM products WHERE id=:id';
+        $sql = 'DELETE FROM product WHERE id=:id';
 
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
@@ -281,7 +281,7 @@ class Product
         $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
         $result->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
         $result->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
-        $result->bindParam(':description', $options['description'], PDO::PARAM_INT);
+        $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
         $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
         $result->bindParam(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
         $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
@@ -292,4 +292,41 @@ class Product
         return false;
     }
 
+
+
+
+
+    public static function updateProductById($id, $options){
+        $db=Db::getConnection();
+
+        $sql = 'UPDATE product SET 
+                    name = :name,
+                    code = :code,
+                    price = :price,
+                    category_id = :category_id,
+                    brand = :brand,
+                    availability = :availability,
+                    description = :description,
+                    is_new = :is_new,
+                    is_recommended = :is_recommended,
+                    status = :status
+                  WHERE id = :id
+                  ';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
+        $result->bindParam(':code', $options['code'], PDO::PARAM_STR);
+        $result->bindParam(':price', $options['price'], PDO::PARAM_STR);
+        $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
+        $result->bindParam(':brand', $options['brand'], PDO::PARAM_STR);
+        $result->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
+        $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
+        $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
+        $result->bindParam(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
+        $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
+
+        return $result->execute();
+
+    }
 }

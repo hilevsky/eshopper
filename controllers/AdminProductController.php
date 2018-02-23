@@ -82,6 +82,52 @@ class AdminProductController extends AdminBase
     }
 
     /**
+     * Action для страницы "Добавление товара"
+     * @return bool
+     */
+    public function actionUpdate($id){
+        self::checkAdmin();
+
+        // Получаем список категорий для выпадающего списка формы добавления товара
+        $categoriesList = Category::getCategoriesListAdmin();
+
+        // Получаем данные о редактируемом товаре для заполнения формы
+        $product = Product::getProductById($id);
+
+        $options=[];
+        // Обработка формы
+        if(isset($_POST['submit'])) {
+            // Если форма отправлена, получаем данные
+            $options['name'] = $_POST['name'];
+            $options['code'] = $_POST['code'];
+            $options['price'] = $_POST['price'];
+            $options['category_id'] = $_POST['category_id'];
+            $options['brand'] = $_POST['brand'];
+            $options['availability'] = $_POST['availability'];
+            $options['description'] = $_POST['description'];
+            $options['is_new'] = $_POST['is_new'];
+            $options['is_recommended'] = $_POST['is_recommended'];
+            $options['status'] = $_POST['status'];
+
+
+            // Если ошибок нет - добавляем товар
+            if (Product::updateProductById($id, $options)) {
+
+                // Проверим, загружалось ли через форму изображеие
+                if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
+                    // Если загружалось, то перемещаем его в нужную папку и даем нужное имя
+                    move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/products/{$id}.jpg");
+                }
+            }
+            // Перенаправляем на страницу управления товарами
+            header("Location: /admin/product");
+        }
+        // Подключаем вид
+        require_once (ROOT.'/views/admin_product/update.php');
+        return true;
+    }
+
+    /**
      * Action для страницы "Удалить товар"
      */
     public function actionDelete($id){
