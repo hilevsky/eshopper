@@ -56,6 +56,28 @@ class Category
     }
 
     /**
+     * Возвращает категорию с указанным id
+     * @param $id   id категории
+     * @return array    массив с данными категории
+     */
+    public static function getCategoryById($id){
+
+        $id = (int)($id);
+
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        $result = $db->query("SELECT * FROM category WHERE id = ".$id);
+
+        // Указываем, что результат запроса нужен в виде ассоциативного массива
+        $result -> setFetchMode(PDO::FETCH_ASSOC);
+
+        // Получение и возврат результата
+        return $result->fetch();
+
+    }
+
+    /**
      * Создает новую категорию (админпанель)
      * @param string $name  название категории
      * @param integer $sortOrder    порядковый номер
@@ -76,6 +98,26 @@ class Category
 
         return $result->execute();
 
+
+    }
+
+    public static function updateCategoryById($id, $options){
+        $db=Db::getConnection();
+
+        $sql = 'UPDATE category SET 
+                    name = :name,
+                    sort_order = :sort_order,
+                    status = :status
+                  WHERE id = :id
+                  ';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
+        $result->bindParam(':sort_order', $options['sort_order'], PDO::PARAM_STR);
+        $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
+
+        return $result->execute();
 
     }
 }

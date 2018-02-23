@@ -82,7 +82,7 @@ class AdminProductController extends AdminBase
     }
 
     /**
-     * Action для страницы "Добавление товара"
+     * Action для страницы "Редактирование товара"
      * @return bool
      */
     public function actionUpdate($id){

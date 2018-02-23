@@ -23,6 +23,10 @@ class AdminCategoryController extends AdminBase
         return true;
     }
 
+    /**
+     * Action для страницы добавления категорий
+     * @return bool
+     */
     public function actionCreate(){
         self::checkAdmin();
 
@@ -50,6 +54,36 @@ class AdminCategoryController extends AdminBase
             }
         }
         require_once (ROOT.'/views/admin_category/create.php');
+        return true;
+    }
+
+    /**
+     * Action для страницы "редактирование категорий"
+     * @return bool
+     */
+    public function actionUpdate($id){
+        self::checkAdmin();
+
+        // Получаем список категорий для выпадающего списка формы добавления товара
+        $category = Category::getCategoryById($id);
+
+
+        $options=[];
+        // Обработка формы
+        if(isset($_POST['submit'])) {
+            // Если форма отправлена, получаем данные
+            $options['name'] = $_POST['name'];
+            $options['sort_order'] = $_POST['sort_order'];
+            $options['status'] = $_POST['status'];
+
+
+            // Обновляем категорию
+            Category::updateCategoryById($id, $options);
+            // Перенаправляем на страницу управления товарами
+            header("Location: /admin/category");
+        }
+        // Подключаем вид
+        require_once (ROOT.'/views/admin_category/update.php');
         return true;
     }
 
