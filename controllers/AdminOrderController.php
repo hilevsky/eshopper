@@ -33,11 +33,11 @@ class AdminOrderController extends AdminBase{
         self::checkAdmin();
 
         // Обработка формы
-        if(isset($post['submit'])){
+        if(isset($_POST['submit'])){
             // Если форма пришла, удаляем заказз
             Order::deleteOrderById($id);
             // Перенаправляем на страницу управления заказами
-            header("Location:/admin/order");
+            header("Location: /admin/order");
         }
         require_once (ROOT.'/views/admin_order/delete.php');
         return true;
