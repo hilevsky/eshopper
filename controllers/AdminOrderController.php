@@ -67,4 +67,35 @@ class AdminOrderController extends AdminBase{
         require_once (ROOT.'/views/admin_order/view.php');
         return true;
     }
+
+    /**
+     * Action для страницы "Редактирование заказа"
+     * @param $id
+     * @return bool
+     */
+    public function actionUpdate($id){
+        self::checkAdmin();
+
+        // Получаем данные о просматриваемом заказе
+        $order = Order::getOrderById($id);
+
+        // Обработка формы
+        if(isset($_POST['submit'])){
+            // Если форма отправлена, получаем данные
+            $userName = $_POST['userName'];
+            $userPhone =$_POST['userPhone'];
+            $userComment = $_POST['userComment'];
+            $date = $_POST['date'];
+            $status = $_POST['status'];
+
+            // Сохраняем изменения в БД
+            Order::updateOrderById($id, $userName, $userPhone, $userComment, $date, $status);
+
+            // Перенаправляем на страницу управления заказами
+            header("Location: /admin/order/view/$id");
+        }
+        // Подключаем вид
+        require_once (ROOT.'/views/admin_order/update.php');
+        return true;
+    }
 }
