@@ -91,4 +91,21 @@ class Order
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         return $result->execute();
     }
+
+    public static function getOrderById($id){
+        $db = Db::getConnection();
+
+        $sql = 'SELECT * FROM product_order WHERE id=:id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        // Получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        // Выполняем запрос
+        $result->execute();
+
+        return $result->fetch();
+    }
 }

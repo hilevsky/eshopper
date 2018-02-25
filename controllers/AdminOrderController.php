@@ -42,4 +42,28 @@ class AdminOrderController extends AdminBase{
         require_once (ROOT.'/views/admin_order/delete.php');
         return true;
     }
+
+    /**
+     * Action для страницы "Просмотр заказа"
+     * @param integer $id   -- id заказа
+     */
+    public function actionView($id){
+        self::checkAdmin();
+
+        // Получаем данные о просматриваемом заказе
+        $order = Order::getOrderById($id);
+
+        // Получаем массив с товарами заказа
+        $productQuantity = json_decode($order['products'], true);
+
+        // Получаем массив с id товаров
+        $productsIds = array_keys($productQuantity);
+
+        // Получаем список товаров в заказе
+        $products = Product::getProductsByIds($productsIds);
+
+        // Подключаем вид
+        require_once (ROOT.'/views/admin_order/view.php');
+        return true;
+    }
 }
