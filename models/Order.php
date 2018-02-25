@@ -36,6 +36,10 @@ class Order
         return $result->execute();
     }
 
+    /**
+     * Возвращает список заказов
+     * @return array    -- список заказов
+     */
     public static function getOrderList(){
         $db = Db::getConnection();
 
@@ -54,5 +58,37 @@ class Order
             $i++;
         }
         return $orderList;
+    }
+
+    public static function getStatusText($status){
+        switch($status){
+            case '1':
+                return 'Новый заказ';
+                break;
+            case '2':
+                return 'В обработке';
+                break;
+            case '3':
+                return 'Доставляется';
+                break;
+            case '4':
+                return 'Закрыт';
+                break;
+
+        }
+    }
+
+    /**
+     * Удалить товар с указанным id
+     * @param integer $id   -- id товара
+     * @return bool
+     */
+    public static function deleteOrderById($id){
+        $db = Db::getConnection();
+
+        $sql = 'DELETE FROM product_order WHERE id=:id';
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        return $result->execute();
     }
 }

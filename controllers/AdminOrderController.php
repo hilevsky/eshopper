@@ -23,4 +23,23 @@ class AdminOrderController extends AdminBase{
         require_once (ROOT.'/views/admin_order/index.php');
         return true;
     }
+
+    /**
+     * Action ля страницы "Удалить заказ"
+     * @param $id
+     * @return bool
+     */
+    public function actionDelete($id){
+        self::checkAdmin();
+
+        // Обработка формы
+        if(isset($post['submit'])){
+            // Если форма пришла, удаляем заказз
+            Order::deleteOrderById($id);
+            // Перенаправляем на страницу управления заказами
+            header("Location:/admin/order");
+        }
+        require_once (ROOT.'/views/admin_order/delete.php');
+        return true;
+    }
 }
