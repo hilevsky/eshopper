@@ -2,7 +2,9 @@
 /**
  * Created 20.02.2018 18:48 by E. Hilevsky
  */
-
+/**
+ * Класс User - модель для работы с пользователями
+ */
 class User
 {
     /**
@@ -55,10 +57,10 @@ class User
     }
 
     /**
- * Проверка E-mail на соответствие
- * @param string $email имя
- * @return bool
- */
+     * Проверка E-mail на соответствие
+     * @param string $email имя
+     * @return bool
+     */
     public static function checkEmail($email){
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             return true;
@@ -135,6 +137,11 @@ class User
         $_SESSION['user'] = $userId;
     }
 
+    /**
+     * Возвращает идентификатор пользователя, если он авторизирован.
+     * Иначе перенаправляет на страницу входа
+     * @return integer  -- id пользователя
+     */
     public static function checkLogged(){
 
         // Если сессия существует, получаем Id пользователя
@@ -145,6 +152,10 @@ class User
         header ("Location: /user/login");
     }
 
+    /**
+     * Проверяет, является ли пользователь гостем
+     * @return boolean Результат выполнения метода
+     */
     public static function isGuest(){
 
         // Если сессия существует, значит неГость
@@ -155,6 +166,11 @@ class User
         return true;
     }
 
+    /**
+     * Возвращает пользователя с указанным id
+     * @param integer $id   -- id пользователя
+     * @return array    -- массив с информацией о пользователе
+     */
     public static function getUserById($id){
 
         if($id){
@@ -173,12 +189,14 @@ class User
 
     /**
      * Редактирование данных пользователя в БД
-     * @param $id
-     * @param $name
-     * @param $password
+     * @param integer $id   -- id пользователя
+     * @param string $name  -- имя пользователя
+     * @param string $password  -- пароль
+     * @return bool     - результат выполнения
      */
     public static function edit($id, $name, $password){
 
+        // шифруем пароль
         $password = md5($password);
 
         $db = Db::getConnection();
@@ -191,9 +209,5 @@ class User
         $result->bindParam(':password', $password, PDO::PARAM_STR);
         return $result->execute();
     }
-
-
-
-
 
 }

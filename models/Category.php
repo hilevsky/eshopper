@@ -21,7 +21,7 @@ class Category
         $categoryList = [];
 
         // запрос к БД
-        $result = $db->query('SELECT id, name FROM category ORDER BY sort_order ASC');
+        $result = $db->query('SELECT id, name FROM category WHERE status = 1 ORDER BY sort_order ASC');
 
         // Получаем результат и отдаем его
         $i=0;
@@ -57,7 +57,7 @@ class Category
 
     /**
      * Возвращает категорию с указанным id
-     * @param $id   id категории
+     * @param integer $id   id категории
      * @return array    массив с данными категории
      */
     public static function getCategoryById($id){
@@ -74,7 +74,6 @@ class Category
 
         // Получение и возврат результата
         return $result->fetch();
-
     }
 
     /**
@@ -91,6 +90,7 @@ class Category
                 VALUES (:name, :sort_order, :status)
                 ';
 
+        // Получение и возврат результатов. Используется подготовленный запрос
         $result = $db->prepare($sql);
         $result->bindParam(':name', $name, PDO::PARAM_STR);
         $result->bindParam(':sort_order', $sortOrder, PDO::PARAM_INT);
@@ -101,6 +101,11 @@ class Category
 
     }
 
+    /** Редактирование категории
+     * @param integer $id   -- id категории
+     * @param array $options  --массив с новыми данными категории
+     * @return bool
+     */
     public static function updateCategoryById($id, $options){
         $db=Db::getConnection();
 
@@ -111,6 +116,7 @@ class Category
                   WHERE id = :id
                   ';
 
+        // Получение и возврат результатов. Используется подготовленный запрос
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
@@ -133,5 +139,23 @@ class Category
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         return $result->execute();
+    }
+
+    /**
+     * Возвращает текстое пояснение статуса для категории :<br/>
+     * <i>0 - Скрыта, 1 - Отображается</i>
+     * @param integer $status <p>Статус</p>
+     * @return string <p>Текстовое пояснение</p>
+     */
+    public static function getStatusText($status)
+    {
+        switch ($status) {
+            case '1':
+                return 'Отображается';
+                break;
+            case '0':
+                return 'Скрыта';
+                break;
+        }
     }
 }

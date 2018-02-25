@@ -3,8 +3,16 @@
  * Created 21.02.2018 19:07 by E. Hilevsky
  */
 
+/**
+ * Контроллер CartController
+ * Работа с корзинойо товаров
+ */
 class CartController
 {
+    /**
+     * Action для добавления товара в корзину
+     * @param integer $id   -- id товара
+     */
     public function actionAdd($id){
 
         // Добавляем товар в корзину
@@ -15,6 +23,10 @@ class CartController
         header("Location: $referrer");
     }
 
+    /**
+     * Action для удаления товара из корзины
+     * @param integer $id -- id удаляемого товара
+     */
     public function actionDelete($id){
 
         // Добавляем товар в корзину
@@ -24,8 +36,13 @@ class CartController
         header("Location: /cart");
     }
 
+    /**
+     * Action для странциы "Корзина"
+     * @return bool
+     */
     public function actionIndex(){
 
+        // Список категорий для левого меню
         $categories =[];
         $categories = Category::getCategoriesList();
 
@@ -42,11 +59,15 @@ class CartController
             // Получаем полную стоимость товаров
             $totalPrice = Cart::getTotalPrice($products);
         }
+        // Подключаем вид
         require_once (ROOT.'/views/cart/index.php');
-
         return true;
     }
 
+    /**
+     * Action для страницы "Оформление покупки"
+     * @return bool
+     */
     public function actionCheckout(){
         // список категорий для левого меню
         $categories =[];
@@ -57,7 +78,7 @@ class CartController
 
         // Проверяем, отправлена ли форма
         if(isset($_POST['submit'])){
-
+            // Если форма заполнена - получаем данные
             $userName = $_POST['userName'];
             $userPhone = $_POST['userPhone'];
             $userComment = $_POST['userComment'];
@@ -73,9 +94,11 @@ class CartController
             if(!$errors){
                 // Собираем информацию о заказе
                 $productsInCart = Cart::getProducts();
+                // Проверяем, является ли пользователь гостем
                 if(User::isGuest()){
                     $userId = false;
                 } else {
+                    // Не гость, получаем информацию о пользователе из БД
                     $userId = User::checkLogged();
                 }
 
@@ -94,10 +117,12 @@ class CartController
                 }
             } else {
                 // Форма заполнена неправильно
+                // Находим общую стоимость,
                 $productsInCart = Cart::getProducts();
                 $productsIds = array_keys($productsInCart);
                 $products = Product::getProductsByIds($productsIds);
                 $totalPrice = Cart::getTotalPrice($products);
+                // Количество товаров
                 $totalQuantity = Cart::countItems();
             }
         } else {
@@ -112,10 +137,11 @@ class CartController
                 header("Location: /");
             } else {
                 // В корзине есть товары - да
-                // Собираем общую стоимость, кол-во товаров
+                // Находим общую стоимость,
                 $productsIds = array_keys($productsInCart);
                 $products = Product::getProductsByIds($productsIds);
                 $totalPrice = Cart::getTotalPrice($products);
+                // Количество товаров
                 $totalQuantity = Cart::countItems();
 
                 $userName = false;
@@ -128,9 +154,8 @@ class CartController
                     $userId = User::checkLogged();
                     $user = User::getUserById($userId);
                     $userName = $user['name'];
-                } else {
-                    // Нет - значения для формы пустые
                 }
+                    // Нет - значения для формы пустые
             }
         }
         require_once (ROOT.'/views/cart/checkout.php');

@@ -10,7 +10,11 @@
 
 class CatalogController
 {
-
+    /**
+     * Action для страницы "Каталог товаров"
+     * @param int $page - номер текущей страницы (для пагинации)
+     * @return bool
+     */
     public function actionIndex($page = 1){
 
         // Список категорий для левого меню
@@ -24,7 +28,7 @@ class CatalogController
         // Кол-во товаров в базе данных для Pagination
         $total = Product::getTotalProducts();
 
-        // Создаем объекм Pagination - постраничная навигация
+        // Создаем объект Pagination - постраничная навигация
         $pagination = new Pagination($total, $page, Product::SHOW_BY_DEFAULT, 'page-');
 
         // Подключаем вид
@@ -35,7 +39,8 @@ class CatalogController
 
     /**
      * Action для страницы "Категория товаров"
-     * @param $categoryId   id категории
+     * @param integer $categoryId   id категории
+     * @param integer $page номер текущей страницы (для пагинации)
      * @return bool
      */
     public function actionCategory($categoryId, $page = 1){

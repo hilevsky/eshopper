@@ -8,7 +8,7 @@
  */
 class Product
 {
-    // Количество отображаемых товаров по умолчанию
+    // Количество отображаемых на странице товаров по умолчанию
     const SHOW_BY_DEFAULT = 6;
 
     /**
@@ -56,7 +56,7 @@ class Product
 
     /**
      * Получить список товаров указанной категории
-     * @param bool $categoryId  id категории
+     * @param integer $categoryId  id категории
      * @return array    массив с данными товаров
      */
     public static function getProductsListByCategory($categoryId = false, $page = 1){
@@ -93,7 +93,7 @@ class Product
 
     /**
      * Возвращает товар с указанным id
-     * @param $id   id товара
+     * @param integer $id   id товара
      * @return array    массив с данными товара
      */
     public static function getProductById($id){
@@ -148,6 +148,11 @@ class Product
 
     }
 
+    /**
+     * Возвращает продукт с указанным id
+     * @param integer $id   -- id товара
+     * @return array    -- массив с информацией о товаре
+     */
     public static function getProductsByIds($idsArray){
 
         $products = [];
@@ -238,9 +243,11 @@ class Product
         return $result->execute();
     }
 
-
-
-
+    /**
+     * Добавляет новый товар
+     * @param array $options    -- массив с информацией о товаре
+     * @return integer  -- id добавленной в таблицу записи
+     */
     public static function createProduct($options){
         $db=Db::getConnection();
 
@@ -268,6 +275,12 @@ class Product
         return false;
     }
 
+    /**
+     * Редактирует товар с заданным id
+     * @param integer $id   -- id товара
+     * @param array $options    -- массив с информацей о товаре
+     * @return boolean  -- результат выполнения метода
+     */
     public static function updateProductById($id, $options){
         $db=Db::getConnection();
 

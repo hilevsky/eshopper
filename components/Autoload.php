@@ -2,7 +2,10 @@
 /**
  * Created 20.02.2018 15:19 by E. Hilevsky
  */
-
+/**
+ * Автозагрузка классов, вместо include в каждом файле
+ * @param $class
+ */
 function autoload($class){
 
     // Спикок папок для поиска классов

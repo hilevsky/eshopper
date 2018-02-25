@@ -31,7 +31,7 @@
                             <td><?=$category['id']?></td>
                             <td><?=$category['name']?></td>
                             <td><?=$category['sort_order']?></td>
-                            <td><?=$category['status']?></td>
+                            <td><?=Category::getStatusText($category['status'])?></td>
                             <td><a href="/admin/category/update/<?=$category['id']?>" title="Редактировать"><i class="fa fa-pencil-square"></i></a></td>
                             <td><a href="/admin/category/delete/<?=$category['id']?>" title="Удалить"><i class="fa fa-times"></i></a></td>
 

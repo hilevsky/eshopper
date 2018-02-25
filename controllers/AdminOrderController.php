@@ -26,7 +26,7 @@ class AdminOrderController extends AdminBase{
 
     /**
      * Action ля страницы "Удалить заказ"
-     * @param $id
+     * @param integer $id   -- id удаляемого заказа
      * @return bool
      */
     public function actionDelete($id){

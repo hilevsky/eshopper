@@ -3,16 +3,27 @@
  * Created 21.02.2018 0:23 by E. Hilevsky
  */
 
+/**
+ * Class CabinetController
+ * Работа с пользователями
+ */
+
 class CabinetController
 {
+    /**
+     * Action для страницы пользователя
+     * @return bool
+     */
     public function actionIndex(){
+
         // Получаем идентификатор пользователя из сессии
         $userId = User::checkLogged();
+
         // Получаем информацию о пользователе
         $user = User::getUserById(($userId));
 
+        // Подключаем вид
         require_once (ROOT.'/views/cabinet/index.php');
-
         return true;
     }
 
@@ -34,9 +45,11 @@ class CabinetController
         $result = false;
 
         if(isset($_POST['submit'])){
+            // Если фоарма отправлена - получаем из нее данные
             $name = $_POST['name'];
             $password = $_POST['password'];
 
+            // массив для ошибок
             $errors = false;
 
             // Валидация данных, полученных из формы авторизации
@@ -51,8 +64,8 @@ class CabinetController
                 $result = User::edit($userId, $name, $password);
             }
         }
+        // Подключаем вид
         require_once (ROOT.'/views/cabinet/edit.php');
-
         return true;
     }
 

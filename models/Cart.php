@@ -3,8 +3,15 @@
  * Created 21.02.2018 19:09 by E. Hilevsky
  */
 
+/**
+ * Class Cart - модель для работы с корзиной товаров
+ */
 class Cart
 {
+    /**
+     * Добавление товара в корзину
+     * @param integer $id   -- id товара
+     */
     public static function addProduct($id){
 
         $id = (int)$id;
@@ -25,11 +32,14 @@ class Cart
             // Добавляем новый товар в корзину
             $productsInCart[$id] = 1;
         }
-
+        // Помещаем товары в сессионную переменную
         $_SESSION['products'] = $productsInCart;
-
     }
 
+    /**
+     * Счетчик для отображения кол-ва товаров в корзине
+     * @return int  -- кол-во товаров
+     */
     public static function countItems(){
         if(isset($_SESSION['products'])){
             $count = 0;
@@ -42,6 +52,11 @@ class Cart
         }
     }
 
+    /**
+     * Получение массива с товарами из корзины
+     * @return type    -- массив с товарами, индекс - id товара, значение - кол-во товара
+     *                      если корзина пуста - false
+     */
     public static function getProducts(){
         if(isset($_SESSION['products'])){
             return $_SESSION['products'];
@@ -49,6 +64,11 @@ class Cart
         return false;
     }
 
+    /**
+     * Получение стоиомтси всех товаров в корзине
+     * @param $products -- массив с товарами
+     * @return int  -- стоимость
+     */
     public static function getTotalPrice($products){
         $productsInCart = self::getProducts();
 
@@ -61,12 +81,19 @@ class Cart
         return $total;
     }
 
+    /**
+     * Очищает корзину
+     */
     public static function clear(){
         if(isset($_SESSION['products'])){
             unset($_SESSION['products']);
         }
     }
 
+    /**
+     * Удаляет товар из корзины
+     * @param integer $id   -- id удаляемого товара
+     */
     public static function deleteProduct($id){
 
         // Получаем корзину - массив с id и кол-вом товара

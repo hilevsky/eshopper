@@ -11,9 +11,11 @@ class AdminCategoryController extends AdminBase
 {
     /**
      * Action для страницы управления категориями
+     * @return bool
      */
     public function actionIndex(){
-        self:self::checkAdmin();
+        // Проверка прав доступа
+        self::checkAdmin();
 
         // Получаем список категорий
         $categoriesList = Category::getCategoriesListAdmin();
@@ -28,6 +30,7 @@ class AdminCategoryController extends AdminBase
      * @return bool
      */
     public function actionCreate(){
+        // Проверка прав доступа
         self::checkAdmin();
 
         // Обработка формы
@@ -53,15 +56,18 @@ class AdminCategoryController extends AdminBase
                 header("Location: /admin/category");
             }
         }
+        //Подключаем вид
         require_once (ROOT.'/views/admin_category/create.php');
         return true;
     }
 
     /**
      * Action для страницы "редактирование категорий"
+     * @param integer $id   -- id редактируемой категории
      * @return bool
      */
     public function actionUpdate($id){
+        // Проверка прав доступа
         self::checkAdmin();
 
         // Получаем список категорий для выпадающего списка формы добавления товара
@@ -89,9 +95,11 @@ class AdminCategoryController extends AdminBase
 
     /**
      * Action для страницы "Удалить категорию"
+     * @param integer $id   -- id редактируемой категории
+     * @return bool
      */
     public function actionDelete($id){
-        // Проверка доступа
+        // Проверка прав доступа
         self::checkAdmin();
 
         // Обработка формы
@@ -101,6 +109,7 @@ class AdminCategoryController extends AdminBase
             // Перенаправление на страницу управления товарами
             header("Location: /admin/category");
         }
+        //Подключаем вид
         require_once (ROOT.'/views/admin_category/delete.php');
         return true;
     }

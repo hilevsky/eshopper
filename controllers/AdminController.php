@@ -9,6 +9,10 @@
  */
 class AdminController extends AdminBase
 {
+    /**
+     * Action для главной страницы админпанели
+     * @return bool
+     */
     public function actionIndex(){
 
         // Проверка прав доступа

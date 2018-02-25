@@ -83,6 +83,7 @@ class AdminProductController extends AdminBase
 
     /**
      * Action для страницы "Редактирование товара"
+     * @param integer $id   -- id редактируемого товара
      * @return bool
      */
     public function actionUpdate($id){
@@ -129,6 +130,8 @@ class AdminProductController extends AdminBase
 
     /**
      * Action для страницы "Удалить товар"
+     *@param integer $id   -- id удаляемого товара
+     *@return bool
      */
     public function actionDelete($id){
         // Проверка доступа
