@@ -46,6 +46,7 @@ class AdminOrderController extends AdminBase{
     /**
      * Action для страницы "Просмотр заказа"
      * @param integer $id   -- id заказа
+     * @return bool
      */
     public function actionView($id){
         self::checkAdmin();
@@ -54,10 +55,10 @@ class AdminOrderController extends AdminBase{
         $order = Order::getOrderById($id);
 
         // Получаем массив с товарами заказа
-        $productQuantity = json_decode($order['products'], true);
+        $productsQuantity = json_decode($order['products'], true);
 
         // Получаем массив с id товаров
-        $productsIds = array_keys($productQuantity);
+        $productsIds = array_keys($productsQuantity);
 
         // Получаем список товаров в заказе
         $products = Product::getProductsByIds($productsIds);
