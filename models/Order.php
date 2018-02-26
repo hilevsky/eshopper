@@ -165,4 +165,41 @@ class Order
 
         return $result->execute();
     }
+
+    /**
+     * Возвращает список заказов пользователя
+     * @param integer $id -- id пользователя
+     * @return array    -- список заказов
+     */
+    public static function getOrderListByUser($userId){
+        $db = Db::getConnection();
+
+        // Получение и возврат результатов
+        $sql = 'SELECT id, user_name, user_phone, user_comment, user_id, date, products, status FROM product_order
+                                        WHERE user_id=:user_id
+                                        ORDER BY id DESC';
+        $result = $db->prepare($sql);
+        $result->bindParam(':user_id', $userId, PDO::PARAM_INT);
+
+        // Получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        // Выполняем запрос
+        $result->execute();
+
+        $orderList=[];
+        $i = 0;
+        while($row = $result->fetch()){
+            $orderList[$i]['id'] = $row['id'];
+            $orderList[$i]['user_name'] = $row['user_name'];
+            $orderList[$i]['user_phone'] = $row['user_phone'];
+            $orderList[$i]['user_comment'] = $row['user_comment'];
+            $orderList[$i]['user_id'] = $row['user_id'];
+            $orderList[$i]['date'] = $row['date'];
+            $orderList[$i]['products'] = $row['products'];
+            $orderList[$i]['status'] = $row['status'];
+            $i++;
+        }
+        return $orderList;
+    }
 }

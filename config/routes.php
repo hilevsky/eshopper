@@ -28,6 +28,7 @@ return array(
     'user/login' => 'user/login',
     'user/logout' => 'user/logout',
     'cabinet/edit' => 'cabinet/edit',
+    'cabinet/history' => 'cabinet/history',
     'cabinet' =>'cabinet/index',    // indexAction в CabinetController
 
     // Управление товарами:

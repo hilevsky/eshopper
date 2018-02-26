@@ -69,4 +69,36 @@ class CabinetController
         return true;
     }
 
+    /**
+     * Action для страницы "Список покупок"
+     * @param integer $id   -- id заказа
+     * @return bool
+     */
+    public function actionHistory(){
+
+        // Получаем id пользователя
+        $userId = $_SESSION['user'];
+
+        // Получаем информацию о пользователе
+        $user = User::getUserById(($userId));
+
+        // Получаем данные о заказах (приходит массив массивов)
+        $orderList = Order::getOrderListByUser($userId);
+
+        foreach($orderList as $order) {
+            // Получаем массив с товарами заказа
+            $productsQuantity[$order['id']] = json_decode($order['products'], true);
+
+            // Получаем массив с id товаров
+            $productsIds = array_keys($productsQuantity[$order['id']]);
+
+            // Получаем список товаров в заказе
+            $products[$order['id']] = Product::getProductsByIds($productsIds);
+        }
+
+        // Подключаем вид
+        require_once (ROOT.'/views/cabinet/history.php');
+        return true;
+    }
+
 }
