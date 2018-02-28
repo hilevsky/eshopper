@@ -36,7 +36,7 @@
                             <td><a href="/admin/category/delete/<?=$category['id']?>" title="Удалить"><i class="fa fa-times"></i></a></td>
 
                         </tr>
-                    <? endforeach;?>
+                    <?php endforeach;?>
                 </table>
 
             </div>

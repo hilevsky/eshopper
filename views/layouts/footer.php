@@ -20,8 +20,8 @@
 <!-- Slider -->
 
 
+
 <!--
-<script src="/template/js/jquery.js"></script>
 <script>
     $(document).ready(function(){
         $(".add-to-cart").click(function(){
@@ -32,8 +32,8 @@
             return false;
         });
     });
-</script>-->
-
+</script>
+-->
 
 
 </body>

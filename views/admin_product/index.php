@@ -1,4 +1,4 @@
-<?php include ROOT.'/views/layouts/header_admin.php'; ?>
+<?php include ROOT . '/views/layouts/header_admin.php'; ?>
     <section>
         <div class="container">
             <div class="row">
@@ -36,7 +36,7 @@
                             <td><a href="/admin/product/delete/<?=$product['id']?>" title="Удалить"><i class="fa fa-times"></i></a></td>
 
                         </tr>
-                    <? endforeach;?>
+                    <?php endforeach;?>
                 </table>
 
             </div>

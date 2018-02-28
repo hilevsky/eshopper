@@ -30,7 +30,7 @@
 
                         <?php if($result):?>
                             <p>Заказ оформлен. Мы свяжемся с вами в ближайшее время для уточнения деталей.</p>
-                        <? else: ?>
+                        <?php else: ?>
                             <p>Выбрано товаров: <?=$totalQuantity;?>, на сумму <?=$totalPrice;?> $</p>
                         <div class="col-sm-4">
                             <?php if(isset($errors) && is_array($errors)):?>

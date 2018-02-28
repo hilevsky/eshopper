@@ -12,7 +12,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a href="/category/<?php echo $categoryItem['id'];?>" class="<?php if($categoryId == $categoryItem['id']) echo 'active'; ?>">
+                                        <a href="/category/<?php echo $categoryItem['id'];?>" class="<?php if($product['category_id'] == $categoryItem['id']) echo 'active'; ?>">
                                             <?php echo $categoryItem['name'];?>
                                         </a>
                                     </h4>
@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-sm-5">
                             <div class="view-product">
-                                <img src="<?php echo $product['image'];?>" alt="" />
+                                <img src="<?=Product::getImage($product['id'])?>"  alt="" />
                             </div>
                         </div>
                         <div class="col-sm-7">
@@ -39,13 +39,10 @@
                                 <p>Код товара: <?php echo $product['code'];?></p>
                                 <span>
                                             <span><?php echo $product['price'];?> $</span>
-                                            <label>Количество:</label>
-                                            <input type="text" value="1" />
-                                            <button type="button" class="btn btn-fefault cart">
-                                                <i class="fa fa-shopping-cart"></i>
-                                                В корзину
-                                            </button>
-                                        </span>
+                                            <a href="/cart/add/<?=$product['id'];?>" class="btn btn-default add-to-cart">
+                                                <i class="fa fa-shopping-cart"></i>В корзину
+                                            </a>
+                                </span>
                                 <p><b>Наличие:</b> <?php if($product['availability'] == 1) echo 'В наличии'; else  echo 'Под заказ';?> </p>
 
                                 <p><b>Производитель:</b> <?php echo $product['brand'];?></p>
