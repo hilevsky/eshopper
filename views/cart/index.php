@@ -39,12 +39,13 @@
                                         <th>Стоимость, $</th>
                                         <th>Удалить</th>
                                     </tr>
+                                    <form action="calculate" method="post">
                                     <?php foreach($products as $product): ?>
                                         <tr>
                                             <td><?=$product['code'];?></td>
                                             <td><a href="/product/<?=$product['id'];?>"><?=$product['name'];?></a></td>
                                             <td><?=$product['price']?></td>
-                                            <td><?=$productsInCart[$product['id']]?></td>
+                                            <td><input name="<?=$product['id'];?>" value="<?=$productsInCart[$product['id']]?>" type="text" size="3"></td>
                                             <td><?=$product['price']*$productsInCart[$product['id']]?></td>
                                             <td>
                                                 <a href="/cart/delete/<?php echo $product['id'];?>">
@@ -53,14 +54,17 @@
                                             </td>
                                         </tr>
                                     <?php endforeach;?>
+
                                         <tr>
-                                            <td colspan="4">Общая стоимость</td>
+                                            <td colspan="3">Общая стоимость</td>
+                                            <td ><input type="submit" name="submit" class="btn btn-default" value="Пересчитать"></td>
                                             <td><?=$totalPrice;?></td>
-
                                         </tr>
-
+                                    </form>
                                 </table>
                             <a class="btn btn-default checkout" href="/cart/checkout"><i class="fa fa-shopping-cart"></i> Оформить заказ</a>
+
+
                         <?php else:?>
                             <p>Корзина пуста</p>
                         <?php endif;?>

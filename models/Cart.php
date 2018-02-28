@@ -36,6 +36,14 @@ class Cart
         $_SESSION['products'] = $productsInCart;
     }
 
+    public static function Calculate(){
+
+            foreach($_SESSION['products'] as $key=>$value){
+                $i = $key;
+                $_SESSION['products'][$i] = $_POST[$i];
+            }
+    }
+
     /**
      * Счетчик для отображения кол-ва товаров в корзине
      * @return int  -- кол-во товаров

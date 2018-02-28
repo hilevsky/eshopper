@@ -36,6 +36,13 @@ class CartController
         header("Location: /cart");
     }
 
+    public function actionCalculate(){
+
+        if(isset($_POST['submit'])) {
+            Cart::Calculate();
+        }
+    }
+
     /**
      * Action для странциы "Корзина"
      * @return bool
