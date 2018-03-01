@@ -36,6 +36,9 @@ class Cart
         $_SESSION['products'] = $productsInCart;
     }
 
+    /**
+     * Изменение пользователем кол-ва товара в корзине
+     */
     public static function Calculate(){
 
             foreach($_SESSION['products'] as $key=>$value){

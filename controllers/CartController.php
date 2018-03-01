@@ -36,6 +36,9 @@ class CartController
         header("Location: /cart");
     }
 
+    /**
+     * Action для изменения пользователем кол-ва товара в корзине
+     */
     public function actionCalculate(){
 
         if(isset($_POST['submit'])) {
