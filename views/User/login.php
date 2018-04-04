@@ -27,6 +27,7 @@
 
 
                         </div>
+                    <a href="/user/register">Регистрация</a>
 
 
                 </div>
